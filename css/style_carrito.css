@@ -17,7 +17,7 @@ body{
 .icon-cart{
     width: 40px;
     height: 40px;
-    stroke: #ee7a30;
+    stroke: #000;
 }
 
 .icon-cart:hover{
@@ -44,7 +44,7 @@ header{
     top: 55%;
     right: 0;
 
-    background-color:#ee7a30;
+    background-color: #000;
     color: #fff;
     width: 25px;
     height: 25px;
@@ -78,7 +78,7 @@ header{
     justify-content: space-between;
     padding: 30px;
 
-    border-bottom: 1px solid ee7a30
+    border-bottom: 1px solid rgba(0, 0, 0, 0.20);
 
 }
 
@@ -185,8 +185,18 @@ header{
 .info-product button{
     border: none;
     background: none;
-    background-color:#ee7a30;
+    background-color: #000;
     color: #fff;
     padding: 15px 10px;
     cursor: pointer;
+}
+
+.cart-empty{
+    padding: 20px;
+    text-align: center;
+}
+
+
+.hidden{
+    display: none;
 }
