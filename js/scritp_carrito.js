@@ -19,6 +19,8 @@ const productList = document.querySelector(".container-items");
 //Variable de arreglos
 
 let allProducts = [];
+let valorTotal = document.querySelector(".total-pagar");
+const countProducts = document.querySelector("#contador-productos");
 
 productList.addEventListener("click", (e) => {
   if (e.target.classList.contains("btn-add-cart")) {
@@ -29,21 +31,68 @@ productList.addEventListener("click", (e) => {
       price: product.querySelector("p").textContent,
     };
 
-    allProducts = [...allProducts, infoProduct];
+    const existentes = allProducts.some(
+      (product) => product.title === infoProduct.title
+    );
+
+    if (existentes) {
+      const products = allProducts.map((product) => {
+        if (product.title === infoProduct.title) {
+          product.quantity++;
+          return product;
+        } else {
+          return product;
+        }
+      });
+
+      allProducts = [...products];
+    } else {
+      allProducts = [...allProducts, infoProduct];
+    }
+
     showHTML();
-    
   }
 });
+
+
+
+rowProduct.addEventListener("click" , e => {
+    if (e.target.classList.contains("icon-close"))
+    {
+        const product = e.target.parentElement;
+        const title = product.querySelector("p").textContent;
+
+        allProducts = allProducts.filter(
+              product => product.title !== title
+            
+        );
+
+        console.log(allProducts);
+        showHTML();
+
+    }
+
+
+ })
+
 
 //Función para mostrar en el HTML
 
 const showHTML = () => {
+
+    if(!allProducts.length)
+    {
+        containerCartProducts.innerHTML=`<p class= "cart-empty"> El carrito está vacío </p>`
+
+    }
+
+  //Limpiar HTML
+  rowProduct.innerHTML = "";
+
+  let totalPagar = 0;
+  let totalProductos = 0;
+
   allProducts.forEach((product) => {
-
-//Limpiar HTML
-
-rowProduct.innerHTML="";
-
     const containerProduct = document.createElement("div");
     containerProduct.classList.add("cart-product");
 
@@ -71,7 +120,12 @@ rowProduct.innerHTML="";
 
         `;
 
-    rowProduct.append(containerProduct)
-
+    rowProduct.append(containerProduct);
+    totalPagar =
+    totalPagar + parseInt(product.quantity * product.price.slice(1));
+    totalProductos = totalProductos + product.quantity;
   });
+
+  valorTotal.innerText = `$${totalPagar}`;
+  countProducts.innerText = totalProductos;
 };
