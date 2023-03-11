@@ -1,26 +1,31 @@
+//Mensaje
+
 const btnCart = document.querySelector(".container-cart-icon");
 const containerCartProducts = document.querySelector(
   ".container-cart-products"
 );
 
+//Botón que aparece o desaparece el carrtio de compra y de los productos comprados
 btnCart.addEventListener("click", () => {
   containerCartProducts.classList.toggle("hidden-cart");
 });
 
-//--------------------------
+//Información especifica del producto
+
 
 const cartInfo = document.querySelector(".cart-product");
 const rowProduct = document.querySelector(".row-product");
-
-//Lista de todos los productos
-
 const productList = document.querySelector(".container-items");
 
-//Variable de arreglos
+
+//Variable del listado del todo los productos.
 
 let allProducts = [];
 let valorTotal = document.querySelector(".total-pagar");
 const countProducts = document.querySelector("#contador-productos");
+
+
+//Evento Click que va agregando y realizando las operaciones de adición del producto escogido.
 
 productList.addEventListener("click", (e) => {
   if (e.target.classList.contains("btn-add-cart")) {
@@ -54,37 +59,25 @@ productList.addEventListener("click", (e) => {
   }
 });
 
+// Evento que elimina el producto, en caso de que no desea comprar.
+rowProduct.addEventListener("click", (e) => {
+  if (e.target.classList.contains("icon-close")) {
+    const product = e.target.parentElement;
+    const title = product.querySelector("p").textContent;
 
+    allProducts = allProducts.filter((product) => product.title !== title);
 
-rowProduct.addEventListener("click" , e => {
-    if (e.target.classList.contains("icon-close"))
-    {
-        const product = e.target.parentElement;
-        const title = product.querySelector("p").textContent;
+    console.log(allProducts);
+    showHTML();
+  }
+});
 
-        allProducts = allProducts.filter(
-              product => product.title !== title
-            
-        );
-
-        console.log(allProducts);
-        showHTML();
-
-    }
-
-
- })
-
-
-//Función para mostrar en el HTML
+//Función para mostrar en el HTML en la página web
 
 const showHTML = () => {
-
-    if(!allProducts.length)
-    {
-        containerCartProducts.innerHTML=`<p class= "cart-empty"> El carrito está vacío </p>`
-
-    }
+  if (!allProducts.length) {
+    containerCartProducts.innerHTML = `<p class= "cart-empty"> El carrito está vacío </p>`;
+  }
 
   //Limpiar HTML
   rowProduct.innerHTML = "";
@@ -122,7 +115,7 @@ const showHTML = () => {
 
     rowProduct.append(containerProduct);
     totalPagar =
-    totalPagar + parseInt(product.quantity * product.price.slice(1));
+      totalPagar + parseInt(product.quantity * product.price.slice(1));
     totalProductos = totalProductos + product.quantity;
   });
 
